@@ -1,0 +1,36 @@
+# MVP-02B-3 (R9): CI for the loop's target repository. Every pull request here is untrusted code,
+# agent-authored ones included: read-only contents, no secrets, no environment, and never
+# `pull_request_target` or `workflow_run`. Pinned by blob in the loop's preflight (R6).
+name: ci
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Exact head, no stored credential
+        shell: bash
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+          set +e
+          git config --local --name-only --get-regexp '^(http\..*extraheader|credential\.|url\.|include\.|includeif\.|extensions\.worktreeconfig)'
+          rc=$?
+          set -e
+          test "$rc" = 1
+          urls="$(git config --local --get-regexp '^remote\..*\.(push)?url$' || true)"
+          case "$urls" in
+            *@*) echo "a remote URL carries a credential"; exit 1 ;;
+          esac
+          echo "head=$HEAD_SHA"
+      - shell: bash
+        run: python3 -I -m unittest discover -s toy -v
