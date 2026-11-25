@@ -1,0 +1,28 @@
+{
+  "schema": "gdf-loop-policy/v2",
+  "repository": "larry-gardner/gdf-loop-target-1",
+  "base_branch": "main",
+  "task_label": "gdf:task",
+  "approval_label": "gdf:approved",
+  "task_author_logins": ["larry-gardner"],
+  "approver_logins": ["larry-gardner"],
+  "orchestrator_login": "gdf-loop-orchestrator[bot]",
+  "account_ids": {"larry-gardner": 19517861, "gdf-loop-orchestrator[bot]": 356007897},
+  "app": {"app_id": 5736026, "installation_id": 181407749, "keychain_service": "gdf-loop-app-key",
+          "keychain_account": "gdf-orchestrator"},
+  "ci_workflow": {"id": 415031587, "name": "ci"},
+  "task_id_prefix": "gdf-",
+  "test_command": ["python3", "-I", "-m", "unittest", "discover", "-s", "toy", "-v"],
+  "limits": {"assignment_seconds": 900, "task_seconds": 7200, "max_changed_files": 20,
+             "max_file_bytes": 200000, "report_bytes": 20000},
+  "budget": {"task_micro_usd": 4000000, "assignment_micro_usd": 1000000},
+  "roles": {"coding": "claude-code", "quality": "codex"},
+  "ruleset_pin": {
+    "repository_id": 1454364715,
+    "owner_id": 19517861,
+    "rulesets": [
+      {"id": 27061761, "updated_at": "2026-11-11T20:24:14.725Z", "bypass": "admin_pull_request"},
+      {"id": 27061823, "updated_at": "2026-11-11T20:29:54.765Z", "bypass": "admin_pull_request"}
+    ]
+  }
+}
