@@ -22,7 +22,7 @@
     "owner_id": 19517861,
     "rulesets": [
       {"id": 27061761, "updated_at": "2026-11-11T20:24:14.725Z", "bypass": "admin_pull_request"},
-      {"id": 27061823, "updated_at": "2026-11-11T20:29:54.765Z", "bypass": "admin_pull_request"}
+      {"id": 27061823, "updated_at": "2026-11-26T14:30:58.468Z", "bypass": "admin_pull_request"}
     ]
   }
 }
